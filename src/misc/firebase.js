@@ -1,4 +1,7 @@
 import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+
 const config = {
   apiKey: 'AIzaSyB8VUSxRhO7qzlzfwXzAOVNEgL6xnih5gk',
   authDomain: 'chat-web-app-27d36.firebaseapp.com',
@@ -11,3 +14,20 @@ const config = {
 
 //Returns an instance of firebase Application
 const app = firebase.initializeApp(config);
+export const auth = app.auth();
+export const database = app.database();
+
+// firebase Database ($userid is the one in path checking the one sent)
+// {
+//   "rules": {
+//     "profiles":{
+//       "$user_id":{
+//         ".read": "$user_id === auth.uid",
+//         ".write": "$user_id ===auth.uid",
+//       }
+//     },
+//     ".read": false,
+//     ".write": false
+//   }
+// }
+// Paste this in database.rules.json
