@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Row, Col } from 'rsuite';
-import { Sidebar } from '../components/Sidebar';
+import Sidebar from '../components/Sidebar';
+
 const Home = () => {
   return (
     <Grid fluid className="h-100">

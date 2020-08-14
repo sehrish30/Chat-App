@@ -13,6 +13,7 @@ export const ProfileProvider = ({ children }) => {
     const authUnsubscribe = auth.onAuthStateChanged(authObj => {
       //Now unsubscribe from on listener on database
 
+      //State management from display name incase of any change this will update
       if (authObj) {
         userRef = database.ref(`/profiles/${authObj.uid}`);
         userRef.on('value', snap => {
