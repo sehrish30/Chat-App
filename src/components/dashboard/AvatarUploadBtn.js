@@ -4,6 +4,7 @@ import AvatarEditor from 'react-avatar-editor';
 import { useModalState } from '../../misc/custom-hooks';
 import { storage, database } from '../../misc/firebase';
 import { useProfile } from '../../context/profile.context';
+import ProfileAvatar from '../ProfileAvatar';
 
 const fileInputTypes = '.png, .jpeg, .jpg';
 
@@ -76,20 +77,27 @@ const AvatarUploadBtn = () => {
 
   return (
     <div className="mt-3 text-center">
-      <label
-        htmlFor="avatar-upload"
-        className="d-block cursor-pointer padded text-underline"
-      >
-        Select your avatar
-        <input
-          id="avatar-upload"
-          type="file"
-          className="d-none"
-          accept={fileInputTypes}
-          onChange={onFileInputChange}
-        />
-      </label>
+      <ProfileAvatar
+        className="width-200 height-200 img-fullsize font-huge"
+        src={profile.avatar}
+        name={profile.name}
+      />
 
+      <div>
+        <label
+          htmlFor="avatar-upload"
+          className="d-block cursor-pointer padded text-underline"
+        >
+          Select your avatar
+          <input
+            id="avatar-upload"
+            type="file"
+            className="d-none"
+            accept={fileInputTypes}
+            onChange={onFileInputChange}
+          />
+        </label>
+      </div>
       <Modal show={isOpen} onHide={close}>
         <Modal.Header>
           <Modal.Title>Adjust and upload new avatar</Modal.Title>
