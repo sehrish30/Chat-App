@@ -42,3 +42,9 @@ textarea.rs-input {
     max-width: 300px;
   }
 }
+
+.rs-nav-subtle.rs-nav-vertical
+  .rs-nav-item.rs-nav-item-active
+  > .rs-nav-item-content::before {
+  background-color: #0f4c75;
+}

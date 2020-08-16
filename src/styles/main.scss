@@ -19,6 +19,10 @@ body {
   color: $secondary-color;
 }
 
+span {
+  color: #797a7e;
+}
+
 html,
 body,
 #root,
@@ -32,11 +36,11 @@ body,
   }
 
   &::-webkit-scrollbar-track {
-    background: $bg-color;
+    background: #797a7e;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $bg-color;
+    background: #797a7e;
   }
 }
 
