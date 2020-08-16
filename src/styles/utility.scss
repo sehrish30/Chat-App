@@ -31,6 +31,14 @@ $indent_3: 15px;
   overflow: hidden !important;
 }
 
+.text-chatname {
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  color: #3282b8;
+  font-style: italic;
+}
+
 .overflow-y-scroll {
   overflow-y: scroll;
 }
@@ -151,6 +159,10 @@ $indent_3: 15px;
 
 .font-huge {
   font-size: 100px;
+}
+
+.font-medium {
+  font-size: 1.2rem;
 }
 
 .contain-scroll {
