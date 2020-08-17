@@ -10,7 +10,7 @@ import {
   Schema,
   Alert,
 } from 'rsuite';
-import firebase from 'firebase/app';
+import firebase, { auth } from 'firebase/app';
 import { useModalState } from '../misc/custom-hooks';
 import { database } from '../misc/firebase';
 
@@ -46,9 +46,14 @@ const CreateRoomBtnModal = () => {
     }
 
     setIsLoading(true);
+
+    //Whenever we create new room we ste ourselves as admin
     const newRoomdata = {
       ...formValue,
       createdAt: firebase.database.ServerValue.TIMESTAMP,
+      admins: {
+        [auth.currentUser.uid]: true,
+      },
     };
 
     try {

@@ -4,10 +4,12 @@ import { Icon, ButtonToolbar } from 'rsuite';
 import { useCurrentRoom } from '../../../context/current-room.context';
 import { useMediaQuery } from '../../../misc/custom-hooks';
 import RoomInfoBtnModal from './RoomInfoBtnModal';
+import EditRoomBtnDrawer from './EditRoomBtnDrawer';
 
 const ChatTop = () => {
   const name = useCurrentRoom(v => v.name);
   const isMobile = useMediaQuery('(max-width: 992px)');
+  const isAdmin = useCurrentRoom(v => v.isAdmin);
 
   return (
     <div>
@@ -26,11 +28,13 @@ const ChatTop = () => {
           />
           <span className="text-chatname">{name}</span>
         </h4>
-        <ButtonToolbar className="white-space:no-wrap">Todo</ButtonToolbar>
+        <ButtonToolbar className="white-space:no-wrap">
+          {isAdmin && <EditRoomBtnDrawer />}
+        </ButtonToolbar>
       </div>
 
       <div className="d-flex justify-content-between align-items-center">
-        <span>todo</span>
+        <span>Todo</span>
         <RoomInfoBtnModal />
       </div>
     </div>
