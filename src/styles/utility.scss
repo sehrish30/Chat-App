@@ -13,6 +13,11 @@ $indent_3: 15px;
   }
 }
 
+.background-black,
+.background-black:hover {
+  background-color: #1b262c;
+}
+
 .text-center {
   text-align: center;
 }
@@ -181,6 +186,10 @@ $indent_3: 15px;
 
 .p-0 {
   padding: 0;
+}
+
+.p-3 {
+  padding: 1px 3px;
 }
 
 .m-0 {
