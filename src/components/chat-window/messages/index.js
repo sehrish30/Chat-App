@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router';
-import { database } from '../../../misc/firebase';
+import { database, auth } from '../../../misc/firebase';
 import { transformToArrWithId } from '../../../misc/helpers';
 import MessageItem from './MessageItem';
 import { Alert } from 'rsuite';
@@ -51,6 +51,31 @@ const Messages = () => {
     [chatId]
   );
 
+  const handleLike = useCallback(async msgId => {
+    //Uid of current user
+    const { uid } = auth.currentUser;
+    const messageRef = database.ref(`/messages/${msgId}`);
+
+    await messageRef.transaction(msg => {
+      if (msg) {
+        if (msg.likes && msg.likes[uid]) {
+          msg.likeCount -= 1; //null will remove it
+          msg.likes[uid] = null;
+          alertMsg = 'Like removed';
+        } else {
+          msg.likeCount += 1;
+          if (!msg.likes) {
+            msg.likes = {};
+          }
+          msg.likes[uid] = true;
+          alertMsg = 'Liked';
+        }
+      }
+      return msg;
+    });
+    Alert.info(alertMsg, 4000);
+  }, []);
+
   //Unsubscribe from real tim elistener
 
   return (
@@ -58,7 +83,12 @@ const Messages = () => {
       {isChatEmpty && <li className="text-chat">No messages yet</li>}
       {canShowMessages &&
         messages.map(msg => (
-          <MessageItem key={msg.uid} message={msg} handleAdmin={handleAdmin} />
+          <MessageItem
+            key={msg.uid}
+            message={msg}
+            handleLike={handleLike}
+            handleAdmin={handleAdmin}
+          />
         ))}
     </ul>
   );
