@@ -52,3 +52,19 @@ export async function getUserUpdates(userId, keyToUpdate, value, db) {
 
   return updates;
 }
+
+//Will convert every item to date
+//Will group messages by date
+//groupingKeyFn is a callback that gets keys
+export function groupBy(array, groupingKeyFn) {
+  return array.reduce((result, item) => {
+    const groupingKey = groupingKeyFn(item); //Will receive msg item
+
+    if (!result[groupingKey]) {
+      result[groupingKey] = [];
+    }
+    result[groupingKey].push(item);
+    // console.log(result);
+    return result;
+  }, []);
+}
