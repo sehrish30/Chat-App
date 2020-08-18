@@ -13,6 +13,10 @@ $indent_3: 15px;
   }
 }
 
+.img-style {
+  outline: none;
+}
+
 .background-black,
 .background-black:hover {
   background-color: #1b262c;
@@ -190,6 +194,10 @@ $indent_3: 15px;
 
 .p-3 {
   padding: 1px 3px;
+}
+
+.p-chat {
+  padding-bottom: 6px;
 }
 
 .m-0 {
