@@ -3,6 +3,7 @@
     // Required for certain syntax usages
     "ecmaVersion": 2017
   },
+  "root": true,
   "plugins": [
     "promise"
   ],
@@ -30,7 +31,7 @@
     "no-template-curly-in-string": 1,
 
     // Warn if return statements do not either always or never specify values
-    "consistent-return": 1,
+    "consistent-return": 0,
 
     // Warn if no return statements in callbacks of array methods
     "array-callback-return": 1,
@@ -118,6 +119,6 @@
     "promise/catch-or-return": 2,
 
     // Warn against nested then() or catch() statements
-    "promise/no-nesting": 1
+    "promise/no-nesting": 1,
   }
 }
