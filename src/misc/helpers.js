@@ -66,7 +66,7 @@ export function groupBy(array, groupingKeyFn) {
     result[groupingKey].push(item);
     // console.log(result);
     return result;
-  }, []);
+  }, {});
 }
 
 export const isLocalhost = Boolean(

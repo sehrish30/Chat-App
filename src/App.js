@@ -8,19 +8,22 @@ import PublicRoute from './components/PublicRoute';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import { ProfileProvider } from './context/profile.context';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 function App() {
   return (
-    <ProfileProvider>
-      <Switch>
-        <PublicRoute path="/signin">
-          <SignIn />
-        </PublicRoute>
-        <PrivateRoute path="/">
-          <Home />
-        </PrivateRoute>
-      </Switch>
-    </ProfileProvider>
+    <ErrorBoundary>
+      <ProfileProvider>
+        <Switch>
+          <PublicRoute path="/signin">
+            <SignIn />
+          </PublicRoute>
+          <PrivateRoute path="/">
+            <Home />
+          </PrivateRoute>
+        </Switch>
+      </ProfileProvider>
+    </ErrorBoundary>
   );
 }
 
