@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import firebase from 'firebase/app';
-import { auth, database } from '../misc/firebase';
+import { auth, database, messaging } from '../misc/firebase';
 
 // We'll create two constants which we will write to
 // the Realtime database when this device is offline
@@ -25,7 +25,8 @@ export const ProfileProvider = ({ children }) => {
   useEffect(() => {
     let userRef;
     let userStatusRef;
-    const authUnsubscribe = auth.onAuthStateChanged(authObj => {
+    let tokenRefreshUnsub;
+    const authUnsubscribe = auth.onAuthStateChanged(async authObj => {
       //Now unsubscribe from on listener on database
 
       //State management from display name incase of any change this will update
@@ -76,8 +77,42 @@ export const ProfileProvider = ({ children }) => {
               userStatusRef.set(isOnlineForDatabase);
             });
         });
+
+        /*-------------------------------------
+        firebase messaging
+        -------------------------------------*/
+        // Get Instance ID token. Initially this makes a network call, once retrieved
+        // subsequent calls to getToken will return from cache.
+        if (messaging) {
+          try {
+            const currentToken = await messaging.getToken();
+            // Get chat token from backend
+            if (currentToken) {
+              await database
+                .ref(`/fcm_tokens/${currentToken}`)
+                .set(authObj.uid);
+            }
+          } catch (err) {
+            console.log('An error occurred while retrieving token. ', err);
+          }
+
+          // Callback fired if Instance ID token is updated.
+          tokenRefreshUnsub = messaging.onTokenRefresh(async () => {
+            try {
+              const currentToken = await messaging.getToken();
+              // Get chat token from backend
+              if (currentToken) {
+                await database
+                  .ref(`/fcm_tokens/${currentToken}`)
+                  .set(authObj.uid);
+              }
+            } catch (err) {
+              console.log('An error occurred while retrieving token. ', err);
+            }
+          });
+        }
       } else {
-        //Unsubscribing
+        // Unsubscribing
         if (userRef) {
           userRef.off();
         }
@@ -85,13 +120,17 @@ export const ProfileProvider = ({ children }) => {
         if (userStatusRef) {
           userStatusRef.off();
         }
+
+        if (tokenRefreshUnsub) {
+          tokenRefreshUnsub();
+        }
         database.ref('.info/connected').off();
 
         setProfile(null);
         setIsLoading(false);
       }
     });
-    //This is cleanup func for useeffect whwen component in unmounted
+    // This is cleanup func for useeffect whwen component in unmounted
     return () => {
       authUnsubscribe();
       database.ref('.info/connected').off();
@@ -102,6 +141,10 @@ export const ProfileProvider = ({ children }) => {
 
       if (userStatusRef) {
         userStatusRef.off();
+      }
+
+      if (tokenRefreshUnsub) {
+        tokenRefreshUnsub();
       }
     };
   }, []);

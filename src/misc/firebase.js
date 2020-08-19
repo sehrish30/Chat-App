@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
+import 'firebase/messaging';
 
 const config = {
   apiKey: 'AIzaSyB8VUSxRhO7qzlzfwXzAOVNEgL6xnih5gk',
@@ -19,17 +20,17 @@ export const auth = app.auth();
 export const database = app.database();
 export const storage = app.storage();
 
-// firebase Database ($userid is the one in path checking the one sent)
-// {
-//   "rules": {
-//     "profiles":{
-//       "$user_id":{
-//         ".read": "$user_id === auth.uid",
-//         ".write": "$user_id ===auth.uid",
-//       }
-//     },
-//     ".read": false,
-//     ".write": false
-//   }
-// }
-// Paste this in database.rules.json
+export const messaging = firebase.messaging.isSupported()
+  ? app.messaging()
+  : null;
+
+if (messaging) {
+  messaging.usePublicVapidKey(
+    'BGjVH1KyAnhBjBw4AHxyAWl5VcVQji9Eqpb5shM62uLq-8310uz59zAg-KvZjkdAe7tCdf3SiLX9WFWGl1IB3aI'
+  );
+
+  //Handle foreground messages
+  messaging.onMessage(data => {
+    console.log(data);
+  });
+}

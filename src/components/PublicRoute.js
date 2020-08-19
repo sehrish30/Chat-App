@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router';
 import { useProfile } from '../context/profile.context';
-import { Container, Loader } from 'rsuite';
+import { Container } from 'rsuite';
 
 const PublicRoute = ({ children, ...routeProps }) => {
   const { profile, isLoading } = useProfile();

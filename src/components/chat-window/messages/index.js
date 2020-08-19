@@ -74,10 +74,11 @@ const Messages = () => {
     };
   }, [loadMessages]);
 
-  let alertMsg;
   const handleAdmin = useCallback(
     async uid => {
       const adminsRef = database.ref(`/rooms/${chatId}/admins`);
+
+      let alertMsg;
 
       await adminsRef.transaction(admins => {
         if (admins) {
@@ -100,7 +101,7 @@ const Messages = () => {
     // Uid of current user
     const { uid } = auth.currentUser;
     const messageRef = database.ref(`/messages/${msgId}`);
-
+    let alertMsg;
     await messageRef.transaction(msg => {
       if (msg) {
         if (msg.likes && msg.likes[uid]) {
