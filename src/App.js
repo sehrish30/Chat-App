@@ -32,3 +32,6 @@ function App() {
 }
 
 export default App;
+
+// To start also run another cmd with cd functions
+// Then npm run serve

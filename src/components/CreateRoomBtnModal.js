@@ -10,9 +10,9 @@ import {
   Schema,
   Alert,
 } from 'rsuite';
-import firebase, { auth } from 'firebase/app';
+import firebase from 'firebase/app';
 import { useModalState } from '../misc/custom-hooks';
-import { database } from '../misc/firebase';
+import { database, auth } from '../misc/firebase';
 
 /*-------------------------------------
      Schema comes from Rsuite(validates in realtime)
