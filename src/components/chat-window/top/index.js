@@ -45,5 +45,5 @@ const ChatTop = () => {
 };
 
 export default memo(ChatTop);
-//So becuase of useContextSlector if something changes eg name or dec so suppose if
+// So becuase of useContextSlector if something changes eg name or dec so suppose if
 // description changes name wont change and re render

@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
+import { useParams } from 'react-router';
 import {
   Button,
   Icon,
@@ -10,9 +11,8 @@ import {
   Schema,
   Alert,
 } from 'rsuite';
-import { useParams } from 'react-router';
-import { functions } from '../../../misc/firebase';
 import { useModalState } from '../../../misc/custom-hooks';
+import { functions } from '../../../misc/firebase';
 
 const { StringType } = Schema.Types;
 
@@ -42,31 +42,32 @@ const SendFcmBtnModal = () => {
     if (!formRef.current.check()) {
       return;
     }
+
     setIsLoading(true);
+
     try {
-      //function sdk exported from index.js
-      //further this is send as data to fcm.js
       const sendFcm = functions.httpsCallable('sendFcm');
       await sendFcm({ chatId, ...formValue });
 
       setIsLoading(false);
       setFormValue(INITIAL_FORM);
       close();
-      Alert.success('Notification has been sent', 4000);
+
+      Alert.info('Notification has been sent', 7000);
     } catch (error) {
-      Alert.error(error.message, 4000);
+      Alert.error(error.message, 7000);
     }
   };
 
   return (
     <>
-      <Button appearance="primary" size="xs" color="violet" onClick={open}>
-        <Icon icon="podcast" /> Broadcast Message
+      <Button appearance="primary" size="xs" onClick={open}>
+        <Icon icon="podcast" /> Broadcast message
       </Button>
 
       <Modal show={isOpen} onHide={close}>
         <Modal.Header>
-          <Modal.Title>Send notifications to room users</Modal.Title>
+          <Modal.Title>Send notification to room users</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form
@@ -78,7 +79,7 @@ const SendFcmBtnModal = () => {
           >
             <FormGroup>
               <ControlLabel>Title</ControlLabel>
-              <FormControl name="title" placeholder="Enter message title" />
+              <FormControl name="title" placeholder="Enter message title..." />
             </FormGroup>
 
             <FormGroup>

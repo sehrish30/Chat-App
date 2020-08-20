@@ -7,7 +7,7 @@ import { database, auth } from '../../../misc/firebase';
 
 const AskFcmBtnModal = () => {
   const { chatId } = useParams();
-  //Getting from useCurrentRoom hook
+  // Getting from useCurrentRoom hook
   const isReceivingFcm = useCurrentRoom(v => v.isReceivingFcm); // v is selectot
   const { isOpen, close, open } = useModalState();
 
